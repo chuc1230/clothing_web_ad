@@ -32,7 +32,7 @@ const AddProduct = () => {
         formData.append("old_price", productDetails.old_price);
     
         try {
-            const response = await fetch("http://localhost:4000/addproduct", {
+            const response = await fetch("https://clothing-web-be.onrender.com/addproduct", {
                 method: "POST",
                 body: formData,
             });
