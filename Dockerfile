@@ -17,4 +17,5 @@ COPY . .
 EXPOSE 5173
 
 # chay ung dung
-CMD ["npm", "run", "dev", "--", "--host"]
+CMD ["npm", "run", "dev"]
+# CMD ["npm", "run", "dev", "--", "--host"]
