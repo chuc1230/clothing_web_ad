@@ -1,0 +1,61 @@
+.list-order {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 740px;
+  padding: 10px 50px;
+  margin: 30px;
+  border-radius: 6px;
+  background: white;
+}
+
+.listorder-format-main {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr 0.75fr 0.75fr 0.5fr;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 0px;
+  color: #454545;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.listorder-format {
+  align-items: center;
+  font-weight: 500;
+}
+.listorder-allorders {
+  overflow-y: auto;
+  width: 100%;
+}
+.orderitems-quantity{
+  width: 64px;
+  height: 50px;
+  border: 2px solid #fff;
+}
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.search-box{
+    border-radius: 6px;
+    padding: 10px;
+}
+
+@media (max-width: 800px) {
+  .list-order {
+    box-sizing: border-box;
+    width: 95%;
+    height: 100%;
+    padding: 10px;
+    margin: 20px auto;
+  }
+  .listorder-format{
+    flex-wrap:wrap;
+  }
+  .search-container{
+    flex-direction: column;
+  }
+}
