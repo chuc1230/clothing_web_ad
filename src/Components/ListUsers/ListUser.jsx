@@ -108,7 +108,7 @@ const ListUser = () => {
             <p>
               <img
                 onClick={() => {
-                  removeUser(user.id);
+                  removeUser(user._id);
                 }}
                 src={cross_icon}
                 alt=""
