@@ -8,51 +8,70 @@ const ListOrder = () => {
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
-  const [searchName, setSearchName] = useState(""); // State for name search
-  const [searchEmail, setSearchEmail] = useState(""); // State for email search
+  const [searchName, setSearchName] = useState("");
+  const [searchEmail, setSearchEmail] = useState("");
+  const [allProducts, setAllProducts] = useState([]);
+
   const showModal = (order) => {
     setSelectedOrder(order);
     setIsModalOpen(true);
   };
+
   const handleOk = () => {
     setIsModalOpen(false);
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const getProductName = (productId) => {
+    const prod = allProducts.find(p => p.id === Number(productId));
+    return prod ? prod.name : `Sản phẩm ${productId}`;
   };
 
   useEffect(() => {
     const fetchAllOrders = async () => {
       try {
-        const response = await fetch("https://clothing-web-be.onrender.com/admin/allorders", {
+        const response = await fetch("http://localhost:4000/admin/allorders", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
         });
-  
+
         const data = await response.json();
-  
+
         if (data.success) {
           // Lọc đơn hàng có ngày sau 1/1/2025
-          const filteredOrders = data.orders.filter(order => {
+          const filteredOrders = data.orders.filter((order) => {
             return new Date(order.orderDate) > new Date("2025-01-01");
           });
-          setOrders(filteredOrders); // Lưu các đơn hàng đã lọc
+          setOrders(filteredOrders);
         } else {
-          alert("Error fetching orders: " + data.message);
+          alert("Lỗi khi tải danh sách đơn hàng: " + data.message);
         }
       } catch (error) {
         console.error("Error fetching orders:", error);
-        alert("Failed to fetch orders.");
+        alert("Không thể tải danh sách đơn hàng.");
       }
     };
+
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/allproducts");
+        const data = await response.json();
+        setAllProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
     fetchAllOrders();
+    fetchProducts();
   }, []);
-  
 
   useEffect(() => {
-    // Filter orders when either searchName or searchEmail changes
     const filtered = orders.filter((order) => {
       const isNameMatch = order.name
         .toLowerCase()
@@ -64,14 +83,15 @@ const ListOrder = () => {
     });
     setFilteredOrders(filtered);
   }, [searchName, searchEmail, orders]);
+
   return (
     <div className="list-order">
-      <h1>All Orders</h1>
+      <h1>Danh Sách Đơn Hàng</h1>
       <div className="search-container">
         <input
           className="search-box"
           type="text"
-          placeholder="Search by Name"
+          placeholder="Tìm theo tên khách hàng"
           value={searchName}
           onChange={(e) => setSearchName(e.target.value)}
         />
@@ -79,18 +99,18 @@ const ListOrder = () => {
         <input
           className="search-box"
           type="email"
-          placeholder="Search by Email"
+          placeholder="Tìm theo email"
           value={searchEmail}
           onChange={(e) => setSearchEmail(e.target.value)}
         />
       </div>
       <div className="listorder-format-main">
-        <p>Name</p>
+        <p>Tên khách hàng</p>
         <p>Email</p>
-        <p>Order Date</p>
-        <p>Quantity</p>
-        <p>Total Price</p>
-        <p>Details</p>
+        <p>Ngày đặt hàng</p>
+        <p>Số lượng</p>
+        <p>Tổng tiền</p>
+        <p>Chi tiết</p>
       </div>
       <div className="listorder-allorders">
         <hr />
@@ -101,7 +121,7 @@ const ListOrder = () => {
             <p>{new Date(order.orderDate).toLocaleDateString()}</p>
             <p>
               <button className="orderitems-quantity">
-                {Object.values(order.cart).reduce(
+                {Object.values(order.cart || {}).reduce(
                   (total, quantity) => total + quantity,
                   0
                 )}
@@ -115,8 +135,9 @@ const ListOrder = () => {
         ))}
         <hr />
       </div>
+      
       <Modal
-        title={`Order Details of {selectedOrder ? selectedOrder.name : ""}đ`}
+        title={`Chi tiết đơn hàng của ${selectedOrder ? selectedOrder.name : ""}`}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -124,16 +145,16 @@ const ListOrder = () => {
         {selectedOrder && (
           <div>
             <h3>
-              Order Date:{" "}
+              Ngày đặt hàng:{" "}
               {new Date(selectedOrder.orderDate).toLocaleDateString()}
             </h3>
-            <h3>Total Price: {selectedOrder.totalPrice}đ</h3>
-            <h3>Items in this order:</h3>
+            <h3>Tổng tiền: {selectedOrder.totalPrice}đ</h3>
+            <h3>Danh sách sản phẩm:</h3>
             <ul>
-              {Object.entries(selectedOrder.cart).map(
+              {Object.entries(selectedOrder.cart || {}).map(
                 ([productId, quantity]) => (
                   <li key={productId}>
-                    <strong>Product {productId}</strong>: Quantity {quantity}
+                    <strong>{getProductName(productId)}</strong>: Số lượng {quantity}
                   </li>
                 )
               )}

@@ -9,7 +9,7 @@ const ListProduct = () => {
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   const fetchInfo = async () => {
-    await fetch("https://clothing-web-be.onrender.com/allproducts")
+    await fetch("http://localhost:4000/allproducts")
       .then((res) => res.json())
       .then((data) => {
         setAllProducts(data);
@@ -36,7 +36,10 @@ const ListProduct = () => {
   }, [searchTitle, searchCategory, allproducts]);
 
   const remove_product = async (id) => {
-    await fetch("https://clothing-web-be.onrender.com/removeproduct", {
+    if (!window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
+      return;
+    }
+    await fetch("http://localhost:4000/removeproduct", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -50,12 +53,12 @@ const ListProduct = () => {
 
   return (
     <div className="list-product">
-      <h1>All Products</h1>
+      <h1>Danh Sách Sản Phẩm</h1>
       <div className="search-container">
         <input
           className="search-box"
           type="text"
-          placeholder="Search by Title"
+          placeholder="Tìm kiếm theo tên"
           value={searchTitle}
           onChange={(e) => setSearchTitle(e.target.value)}
         />
@@ -64,19 +67,19 @@ const ListProduct = () => {
           value={searchCategory}
           onChange={(e) => setSearchCategory(e.target.value)}
         >
-          <option value="">Select Category</option>
-          <option value="women">Women</option>
-          <option value="men">Men</option>
-          <option value="kid">Kid</option>
+          <option value="">Chọn danh mục</option>
+          <option value="women">Nữ (Women)</option>
+          <option value="men">Nam (Men)</option>
+          <option value="kid">Trẻ em (Kid)</option>
         </select>
       </div>
       <div className="listproduct-format-main">
-        <p>Products</p>
-        <p>Title</p>
-        <p>Old Price</p>
-        <p>New Price</p>
-        <p>Category</p>
-        <p>Remove</p>
+        <p>Hình ảnh</p>
+        <p>Tên sản phẩm</p>
+        <p>Giá cũ</p>
+        <p>Giá mới</p>
+        <p>Danh mục</p>
+        <p>Xóa</p>
       </div>
       <div className="listproduct-allproducts">
         <hr />
@@ -93,7 +96,7 @@ const ListProduct = () => {
             <p>{product.name}</p>
             <p>{product.old_price}đ</p>
             <p>{product.new_price}đ</p>
-            <p>{product.category}</p>
+            <p>{product.category === "women" ? "Nữ" : product.category === "men" ? "Nam" : "Trẻ em"}</p>
             <p>
               <img
                 onClick={() => {

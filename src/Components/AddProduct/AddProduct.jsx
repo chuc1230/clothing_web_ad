@@ -32,19 +32,28 @@ const AddProduct = () => {
         formData.append("old_price", productDetails.old_price);
     
         try {
-            const response = await fetch("https://clothing-web-be.onrender.com/addproduct", {
+            const response = await fetch("http://localhost:4000/addproduct", {
                 method: "POST",
                 body: formData,
             });
     
             const data = await response.json();
             if (data.success) {
-                alert("Product added successfully");
+                alert("Thêm sản phẩm thành công!");
+                setProductDetails({
+                    name:"",
+                    image:"",
+                    category:"women",
+                    new_price:"",
+                    old_price:""
+                });
+                setImage(false);
             } else {
-                alert("Failed to add product");
+                alert("Thêm sản phẩm thất bại!");
             }
         } catch (error) {
             console.error("Add product error:", error);
+            alert("Đã xảy ra lỗi khi thêm sản phẩm!");
         }
     };
     
@@ -52,27 +61,27 @@ const AddProduct = () => {
   return (
     <div className='add-product'>
         <div className='addproduct-itemfield'>
-            <p>Product title</p>
-            <input value={productDetails.name} onChange={changeHandler} type='text' name='name' placeholder='Type here' />
+            <p>Tên sản phẩm</p>
+            <input value={productDetails.name} onChange={changeHandler} type='text' name='name' placeholder='Nhập tên sản phẩm' />
         </div>
 
         <div className='addproduct-price'>
             <div className='addproduct-itemfield'>
-                <p>Price</p>
-                <input value={productDetails.old_price} onChange={changeHandler} type='text' name='old_price' placeholder='Type here' />
+                <p>Giá gốc</p>
+                <input value={productDetails.old_price} onChange={changeHandler} type='text' name='old_price' placeholder='Nhập giá gốc' />
             </div>
             <div className='addproduct-itemfield'>
-                <p>Offer Price</p>
-                <input value={productDetails.new_price} onChange={changeHandler} type='text' name='new_price' placeholder='Type here' />
+                <p>Giá khuyến mãi</p>
+                <input value={productDetails.new_price} onChange={changeHandler} type='text' name='new_price' placeholder='Nhập giá khuyến mãi' />
             </div>
         </div>
 
         <div className="addproduct-itemfield">
-            <p>Product Category</p>
+            <p>Danh mục sản phẩm</p>
             <select value={productDetails.category} onChange={changeHandler} name='category' className='add-product-selector'>
-                <option value='women'>Women</option>
-                <option value='men'>Men</option>
-                <option value='kid'>Kid</option>
+                <option value='women'>Nữ (Women)</option>
+                <option value='men'>Nam (Men)</option>
+                <option value='kid'>Trẻ em (Kid)</option>
             </select>
         </div>
 
@@ -82,7 +91,7 @@ const AddProduct = () => {
             </label>
             <input onChange={imageHandler} type="file" name='image' id='file-input' hidden/>
         </div>
-        <button onClick={() => {Add_Product()}} className='addproduct-btn'>ADD</button>
+        <button onClick={() => {Add_Product()}} className='addproduct-btn'>THÊM SẢN PHẨM</button>
     </div>
   )
 }
