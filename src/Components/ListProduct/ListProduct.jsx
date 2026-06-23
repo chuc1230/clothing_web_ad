@@ -73,43 +73,47 @@ const ListProduct = () => {
           <option value="kid">Trẻ em (Kid)</option>
         </select>
       </div>
-      <div className="listproduct-format-main">
-        <p>Hình ảnh</p>
-        <p>Tên sản phẩm</p>
-        <p>Giá cũ</p>
-        <p>Giá mới</p>
-        <p>Danh mục</p>
-        <p>Xóa</p>
-      </div>
-      <div className="listproduct-allproducts">
-        <hr />
-        {filteredProducts.map((product, index) => (
-          <div
-            key={index}
-            className="listproduct-format-main listproduct-format"
-          >
-            <img
-              src={product.image}
-              alt=""
-              className="listproduct-product-icon"
-            />
-            <p>{product.name}</p>
-            <p>{product.old_price}đ</p>
-            <p>{product.new_price}đ</p>
-            <p>{product.category === "women" ? "Nữ" : product.category === "men" ? "Nam" : "Trẻ em"}</p>
-            <p>
-              <img
-                onClick={() => {
-                  remove_product(product.id);
-                }}
-                src={cross_icon}
-                alt=""
-                className="listproduct-remove-icon"
-              />
-            </p>
+      <div className="listproduct-table-wrapper" style={{ width: "100%", overflowX: "auto" }}>
+        <div style={{ minWidth: "800px" }}>
+          <div className="listproduct-format-main">
+            <p>Hình ảnh</p>
+            <p>Tên sản phẩm</p>
+            <p>Giá cũ</p>
+            <p>Giá mới</p>
+            <p>Danh mục</p>
+            <p>Xóa</p>
           </div>
-        ))}
-        <hr />
+          <div className="listproduct-allproducts">
+            <hr />
+            {filteredProducts.map((product, index) => (
+              <div
+                key={index}
+                className="listproduct-format-main listproduct-format"
+              >
+                <img
+                  src={product.image}
+                  alt=""
+                  className="listproduct-product-icon"
+                />
+                <p>{product.name}</p>
+                <p>{product.old_price}đ</p>
+                <p>{product.new_price}đ</p>
+                <p>{product.category === "women" ? "Nữ" : product.category === "men" ? "Nam" : "Trẻ em"}</p>
+                <p>
+                  <img
+                    onClick={() => {
+                      remove_product(product.id);
+                    }}
+                    src={cross_icon}
+                    alt=""
+                    className="listproduct-remove-icon"
+                  />
+                </p>
+              </div>
+            ))}
+            <hr />
+          </div>
+        </div>
       </div>
     </div>
   );

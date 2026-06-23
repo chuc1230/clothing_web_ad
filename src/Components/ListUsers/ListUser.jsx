@@ -110,45 +110,49 @@ const ListUser = () => {
           onChange={(e) => setSearchEmail(e.target.value)}
         />
       </div>
-      <div className="listuser-format-main">
-        <p>Tên tài khoản</p>
-        <p>Email</p>
-        <p>Ngày đăng ký</p>
-        <p>Vai trò</p>
-        <p>Xóa</p>
-      </div>
-
-      <div className="listuser-allusers">
-        <hr />
-        {filteredUsers.map((user, index) => (
-          <div key={index} className="listuser-format listuser-format-main">
-            <p>{user.name}</p>
-            <p>{user.email}</p>
-            <p>{new Date(user.date).toLocaleDateString()}</p>
-            <p>
-              <select
-                value={user.role || "user"}
-                onChange={(e) => handleRoleChange(user._id, e.target.value)}
-                style={{ padding: "5px", borderRadius: "4px", border: "1px solid #ccc" }}
-              >
-                <option value="user">Người dùng (user)</option>
-                <option value="admin">Quản trị viên (admin)</option>
-                <option value="super_admin">Quản trị tối cao (super_admin)</option>
-              </select>
-            </p>
-            <p>
-              <img
-                onClick={() => {
-                  removeUser(user._id);
-                }}
-                src={cross_icon}
-                alt=""
-                className="listuser-remove-icon"
-              />
-            </p>
+      <div className="listuser-table-wrapper" style={{ width: "100%", overflowX: "auto" }}>
+        <div style={{ minWidth: "800px" }}>
+          <div className="listuser-format-main">
+            <p>Tên tài khoản</p>
+            <p>Email</p>
+            <p>Ngày đăng ký</p>
+            <p>Vai trò</p>
+            <p>Xóa</p>
           </div>
-        ))}
-        <hr />
+
+          <div className="listuser-allusers">
+            <hr />
+            {filteredUsers.map((user, index) => (
+              <div key={index} className="listuser-format listuser-format-main">
+                <p>{user.name}</p>
+                <p>{user.email}</p>
+                <p>{new Date(user.date).toLocaleDateString()}</p>
+                <p>
+                  <select
+                    value={user.role || "user"}
+                    onChange={(e) => handleRoleChange(user._id, e.target.value)}
+                    style={{ padding: "5px", borderRadius: "4px", border: "1px solid #ccc" }}
+                  >
+                    <option value="user">Người dùng (user)</option>
+                    <option value="admin">Quản trị viên (admin)</option>
+                    <option value="super_admin">Quản trị tối cao (super_admin)</option>
+                  </select>
+                </p>
+                <p>
+                  <img
+                    onClick={() => {
+                      removeUser(user._id);
+                    }}
+                    src={cross_icon}
+                    alt=""
+                    className="listuser-remove-icon"
+                  />
+                </p>
+              </div>
+            ))}
+            <hr />
+          </div>
+        </div>
       </div>
     </div>
   );

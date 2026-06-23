@@ -25,3 +25,19 @@
         width: 60px;
     }
 }
+
+.nav-back-button {
+  padding: 8px 16px;
+  background-color: #ff4141;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-back-button:hover {
+  background-color: #e03535;
+  transform: scale(1.02);
+}

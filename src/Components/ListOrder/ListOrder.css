@@ -12,7 +12,7 @@
 
 .listorder-format-main {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr 0.75fr 0.75fr 0.5fr;
+  grid-template-columns: 1fr 1.5fr 1fr 0.8fr 0.8fr 1.2fr 0.5fr;
   gap: 10px;
   width: 100%;
   padding: 20px 0px;

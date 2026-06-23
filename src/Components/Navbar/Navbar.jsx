@@ -7,6 +7,9 @@ const Navbar = () => {
   return (
     <div className='navbar'>
         <h1>Admin</h1>
+        <a href="http://localhost:3000/" className="nav-back-button">
+          Quay lại trang bán hàng
+        </a>
     </div>
   )
 }
