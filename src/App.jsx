@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react"
 import Navbar from "./Components/Navbar/Navbar"
 import Admin from "./Pages/Admin/Admin"
 
+const FRONTEND_URL = (import.meta.env.VITE_FRONTEND_URL || "http://localhost:3000").replace(/\/$/, "");
+
 const App = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ const App = () => {
 
     if (isBridge) {
       const handleMessage = (event) => {
-        if (event.origin === "http://localhost:3000" && event.data && event.data.type === "AUTH_TOKEN") {
+        if (event.origin === FRONTEND_URL && event.data && event.data.type === "AUTH_TOKEN") {
           const receivedToken = event.data.token;
           if (receivedToken) {
             localStorage.setItem("auth-token", receivedToken);
@@ -23,7 +25,7 @@ const App = () => {
 
       window.addEventListener("message", handleMessage);
       if (window.parent) {
-        window.parent.postMessage("AUTH_READY", "http://localhost:3000");
+        window.parent.postMessage("AUTH_READY", FRONTEND_URL);
       }
 
       return () => {
@@ -51,7 +53,7 @@ const App = () => {
     }
     
     if (!authorized) {
-      window.location.href = "http://localhost:3000/";
+      window.location.href = `${FRONTEND_URL}/`;
     } else {
       setIsAuthorized(true);
       setLoading(false);

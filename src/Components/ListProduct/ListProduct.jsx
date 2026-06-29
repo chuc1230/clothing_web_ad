@@ -3,6 +3,7 @@ import "./ListProduct.css";
 import cross_icon from "../../assets/cross_icon.png";
 
 const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+const FRONTEND_URL = (import.meta.env.VITE_FRONTEND_URL || "http://localhost:3000").replace(/\/$/, "");
 
 const ListProduct = () => {
   const [allproducts, setAllProducts] = useState([]);
@@ -221,7 +222,7 @@ const ListProduct = () => {
                   className="listproduct-product-icon"
                 />
                 <p>
-                  <a href={`http://localhost:3000/product/${product.id}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#ff4141', fontWeight: '600' }} title="Xem chi tiết sản phẩm">
+                  <a href={`${FRONTEND_URL}/product/${product.id}`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: '#ff4141', fontWeight: '600' }} title="Xem chi tiết sản phẩm">
                     {product.name}
                   </a>
                 </p>
