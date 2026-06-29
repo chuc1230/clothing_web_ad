@@ -7,12 +7,33 @@ const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if token is passed in URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
+    const isBridge = urlParams.get("auth_bridge") === "1" || window.self !== window.top;
+
+    if (isBridge) {
+      const handleMessage = (event) => {
+        if (event.origin === "http://localhost:3000" && event.data && event.data.type === "AUTH_TOKEN") {
+          const receivedToken = event.data.token;
+          if (receivedToken) {
+            localStorage.setItem("auth-token", receivedToken);
+            event.source.postMessage("AUTH_SUCCESS", event.origin);
+          }
+        }
+      };
+
+      window.addEventListener("message", handleMessage);
+      if (window.parent) {
+        window.parent.postMessage("AUTH_READY", "http://localhost:3000");
+      }
+
+      return () => {
+        window.removeEventListener("message", handleMessage);
+      };
+    }
+
     const tokenFromQuery = urlParams.get("token");
     if (tokenFromQuery) {
       localStorage.setItem("auth-token", tokenFromQuery);
-      // Clean up URL query parameters from location bar
       window.history.replaceState({}, document.title, window.location.pathname);
     }
 
@@ -30,7 +51,6 @@ const App = () => {
     }
     
     if (!authorized) {
-      // Redirect to user front-end homepage
       window.location.href = "http://localhost:3000/";
     } else {
       setIsAuthorized(true);

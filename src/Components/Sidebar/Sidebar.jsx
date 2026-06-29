@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Sidebar.css";
 import { Link } from "react-router-dom";
 import add_product_icon from "../../assets/Product_Cart.svg";
 import list_product_icon from "../../assets/Product_list_icon.svg";
 import customer from "../../assets/customer.png";
 import { FcShipped } from "react-icons/fc";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 const Sidebar = () => {
   const token = localStorage.getItem("auth-token");
@@ -20,35 +21,54 @@ const Sidebar = () => {
     }
   }
 
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
+      <div 
+        className="sidebar-toggle" 
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        style={{
+          display: 'flex',
+          justifyContent: isCollapsed ? 'center' : 'flex-end',
+          padding: '10px 20px',
+          cursor: 'pointer',
+          borderBottom: '1px solid #eee',
+          fontSize: '18px',
+          color: '#555'
+        }}
+        title={isCollapsed ? "Mở rộng" : "Thu gọn"}
+      >
+        {isCollapsed ? <FaAngleRight /> : <FaAngleLeft />}
+      </div>
+
       {isSuperAdmin && (
         <Link to={"/listusers"} style={{ textDecoration: "none" }}>
-          <div className="sidebar-item">
+          <div className="sidebar-item" title="Quản lý thành viên">
             <img src={customer} alt="" />
-            <p>Quản lý thành viên</p>
+            {!isCollapsed && <p>Quản lý thành viên</p>}
           </div>
         </Link>
       )}
 
       <Link to={"/addproduct"} style={{ textDecoration: "none" }}>
-        <div className="sidebar-item">
+        <div className="sidebar-item" title="Thêm sản phẩm">
           <img src={add_product_icon} alt="" />
-          <p>Thêm sản phẩm</p>
+          {!isCollapsed && <p>Thêm sản phẩm</p>}
         </div>
       </Link>
 
       <Link to={"/listproduct"} style={{ textDecoration: "none" }}>
-        <div className="sidebar-item">
+        <div className="sidebar-item" title="Danh sách sản phẩm">
           <img src={list_product_icon} alt="" />
-          <p>Danh sách sản phẩm</p>
+          {!isCollapsed && <p>Danh sách sản phẩm</p>}
         </div>
       </Link>
 
       <Link to={"/listorder"} style={{ textDecoration: "none" }}>
-        <div className="sidebar-item">
+        <div className="sidebar-item" title="Danh sách đơn hàng">
           <FcShipped className="order-icon" />
-          <p>Danh sách đơn hàng</p>
+          {!isCollapsed && <p>Danh sách đơn hàng</p>}
         </div>
       </Link>
     </div>

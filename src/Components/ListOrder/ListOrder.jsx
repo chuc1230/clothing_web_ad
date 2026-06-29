@@ -33,7 +33,7 @@ const ListOrder = () => {
   useEffect(() => {
     const fetchAllOrders = async () => {
       try {
-        const response = await fetch("http://localhost:4000/admin/allorders", {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/allorders`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -59,7 +59,7 @@ const ListOrder = () => {
 
     const fetchProducts = async () => {
       try {
-        const response = await fetch("http://localhost:4000/allproducts");
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/allproducts`);
         const data = await response.json();
         setAllProducts(data);
       } catch (error) {
@@ -73,7 +73,7 @@ const ListOrder = () => {
 
   const handleStatusChange = async (userId, orderDate, newStatus) => {
     try {
-      const response = await fetch("http://localhost:4000/admin/updateOrderStatus", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/updateOrderStatus`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
