@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./ListUser.css";
 import cross_icon from "../../assets/cross_icon.png";
 
+const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+
 const ListUser = () => {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
@@ -9,7 +11,7 @@ const ListUser = () => {
   const [searchEmail, setSearchEmail] = useState("");
 
   const fetchUsers = async () => {
-    await fetch(`${import.meta.env.VITE_API_URL}/getUsers`)
+    await fetch(`${API_URL}/getUsers`)
       .then((res) => res.json())
       .then((data) => {
         // Lọc người dùng có ngày đăng ký sau 1/1/2025
@@ -27,7 +29,7 @@ const ListUser = () => {
       return;
     }
     // Gửi yêu cầu DELETE
-    await fetch(`${import.meta.env.VITE_API_URL}/removeuser`, {
+    await fetch(`${API_URL}/removeuser`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +53,7 @@ const ListUser = () => {
 
   const handleRoleChange = async (userId, newRole) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}/role`, {
+      const response = await fetch(`${API_URL}/api/users/${userId}/role`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

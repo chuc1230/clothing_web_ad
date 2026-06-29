@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./ListProduct.css";
 import cross_icon from "../../assets/cross_icon.png";
 
+const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+
 const ListProduct = () => {
   const [allproducts, setAllProducts] = useState([]);
   const [searchTitle, setSearchTitle] = useState("");
@@ -28,7 +30,7 @@ const ListProduct = () => {
   };
 
   const fetchInfo = async () => {
-    await fetch(`${import.meta.env.VITE_API_URL}/allproducts`)
+    await fetch(`${API_URL}/allproducts`)
       .then((res) => res.json())
       .then((data) => {
         setAllProducts(data);
@@ -58,7 +60,7 @@ const ListProduct = () => {
     if (!window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này không?")) {
       return;
     }
-    await fetch(`${import.meta.env.VITE_API_URL}/removeproduct`, {
+    await fetch(`${API_URL}/removeproduct`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -155,7 +157,7 @@ const ListProduct = () => {
     });
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/updateproduct`, {
+      const response = await fetch(`${API_URL}/updateproduct`, {
         method: "POST",
         body: formData
       });

@@ -3,6 +3,8 @@ import { FiEye } from "react-icons/fi";
 import { Modal } from "antd";
 import "./ListOrder.css";
 
+const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+
 const ListOrder = () => {
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
@@ -33,7 +35,7 @@ const ListOrder = () => {
   useEffect(() => {
     const fetchAllOrders = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/allorders`, {
+        const response = await fetch(`${API_URL}/admin/allorders`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -59,7 +61,7 @@ const ListOrder = () => {
 
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/allproducts`);
+        const response = await fetch(`${API_URL}/allproducts`);
         const data = await response.json();
         setAllProducts(data);
       } catch (error) {
@@ -73,7 +75,7 @@ const ListOrder = () => {
 
   const handleStatusChange = async (userId, orderDate, newStatus) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/updateOrderStatus`, {
+      const response = await fetch(`${API_URL}/admin/updateOrderStatus`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import './AddProduct.css'
 import upload_area from '../../assets/upload_area.svg'
 
+const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+
 const subcategoryDetails = {
   "Áo": ["Áo thun", "Áo sơ mi", "Áo khoác", "Áo len"],
   "Quần": ["Quần jean", "Quần tây", "Quần short", "Quần kaki"],
@@ -114,7 +116,7 @@ const AddProduct = () => {
         formData.append("sizes", JSON.stringify(activeSizes));
     
         try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/addproduct`, {
+            const response = await fetch(`${API_URL}/addproduct`, {
                 method: "POST",
                 body: formData,
             });
