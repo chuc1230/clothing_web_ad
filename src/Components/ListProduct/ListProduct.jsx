@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./ListProduct.css";
-import cross_icon from "../../assets/cross_icon.png";
 
 const API_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
 const FRONTEND_URL = (import.meta.env.VITE_FRONTEND_URL || "http://localhost:3000").replace(/\/$/, "");
@@ -245,15 +244,23 @@ const ListProduct = () => {
                   >
                     Sửa
                   </button>
-                  <img
+                  <button
                     onClick={() => {
                       remove_product(product.id);
                     }}
-                    src={cross_icon}
-                    alt=""
-                    className="listproduct-remove-icon"
-                    style={{ margin: '0', cursor: 'pointer' }}
-                  />
+                    style={{
+                      background: '#ff4d4f',
+                      color: 'white',
+                      border: 'none',
+                      padding: '6px 12px',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      fontWeight: 'bold',
+                      fontSize: '12px'
+                    }}
+                  >
+                    Xóa
+                  </button>
                 </p>
               </div>
             ))}
