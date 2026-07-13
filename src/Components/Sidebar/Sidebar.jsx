@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import add_product_icon from "../../assets/Product_Cart.svg";
 import list_product_icon from "../../assets/Product_list_icon.svg";
 import customer from "../../assets/customer.png";
-import { FcShipped } from "react-icons/fc";
+import { FcShipped, FcLineChart } from "react-icons/fc";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 const Sidebar = () => {
@@ -69,6 +69,13 @@ const Sidebar = () => {
         <div className="sidebar-item" title="Danh sách đơn hàng">
           <FcShipped className="order-icon" />
           {!isCollapsed && <p>Danh sách đơn hàng</p>}
+        </div>
+      </Link>
+
+      <Link to={"/stats"} style={{ textDecoration: "none" }}>
+        <div className="sidebar-item" title="Thống kê doanh thu">
+          <FcLineChart className="order-icon" />
+          {!isCollapsed && <p>Thống kê doanh thu</p>}
         </div>
       </Link>
     </div>

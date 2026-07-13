@@ -12,7 +12,7 @@
 
 .listproduct-format-main {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 2.5fr 1fr 1fr 1fr 1fr 1fr;
     gap: 10px;
     width: 100%;
     padding: 20px 0px;
@@ -56,4 +56,22 @@
     .listproduct-product-icon{
         height: 60px;
     }
+}
+
+.modal-input-field {
+    box-sizing: border-box;
+    width: 100%;
+    height: 45px;
+    padding: 0 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    font-size: 14px;
+    font-family: inherit;
+    background-color: #fff;
+    transition: border-color 0.2s ease;
+}
+
+.modal-input-field:focus {
+    border-color: #4a90e2;
 }

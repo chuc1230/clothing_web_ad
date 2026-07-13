@@ -41,3 +41,26 @@
   background-color: #e03535;
   transform: scale(1.02);
 }
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.admin-logout-btn {
+  padding: 8px 16px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.admin-logout-btn:hover {
+  background-color: #555;
+  transform: scale(1.02);
+}

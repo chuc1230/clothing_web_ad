@@ -32,13 +32,17 @@
 }
 
 .add-product-selector {
-    padding: 10px;
-    width: 100px;
+    box-sizing: border-box;
+    padding: 0 15px;
+    width: 100%;
     height: 50px;
     font-size: 14px;
     color: #7b7b7b;
-    border: 1px solid #7b7b8d;
+    border: 1px solid #c3c3c3;
     border-radius: 4px;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
 }
 
 .addproduct-thumnail-img {

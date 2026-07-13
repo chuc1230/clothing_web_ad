@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import Navbar from "./Components/Navbar/Navbar"
 import Admin from "./Pages/Admin/Admin"
+import AdminLogin from "./Components/AdminLogin/AdminLogin"
 
 const FRONTEND_URL = (import.meta.env.VITE_FRONTEND_URL || "http://localhost:3000").replace(/\/$/, "");
 
@@ -43,7 +44,15 @@ const App = () => {
     let authorized = false;
     if (token) {
       try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
+          atob(base64)
+            .split("")
+            .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+            .join("")
+        );
+        const payload = JSON.parse(jsonPayload);
         if (payload.user && (payload.user.role === 'admin' || payload.user.role === 'super_admin')) {
           authorized = true;
         }
@@ -52,16 +61,18 @@ const App = () => {
       }
     }
     
-    if (!authorized) {
-      window.location.href = `${FRONTEND_URL}/`;
-    } else {
+    if (authorized) {
       setIsAuthorized(true);
-      setLoading(false);
     }
+    setLoading(false);
   }, []);
 
   if (loading) {
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontSize: '20px', fontFamily: 'Inter, sans-serif' }}>Đang kiểm tra quyền truy cập...</div>;
+  }
+
+  if (!isAuthorized) {
+    return <AdminLogin onLoginSuccess={() => setIsAuthorized(true)} />;
   }
 
   return (
